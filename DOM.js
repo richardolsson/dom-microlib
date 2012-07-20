@@ -55,6 +55,7 @@ var DOM = (function()
 		this.domElement.style.position = 'absolute';
 		this.domElement.style.left = 0;
 		this.domElement.style.top = 0;
+		this.domElement.style.opacity = 1;
 		setPrefixedProperty(this.domElement.style, 'transform', 'rotate(0) scale(1,1)')
 
 		// Internal ("private") state
@@ -63,6 +64,7 @@ var DOM = (function()
 			y: 0,
 			scaleX: 0,
 			scaleY: 0,
+			opacity: 1,
 			children: []
 		};
 	};
@@ -118,6 +120,15 @@ var DOM = (function()
 			// Update transform property
 			transformValue[1] = value;
 			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
+		}
+	});
+
+
+	Object.defineProperty(Element.prototype, 'opacity', {
+		get: function() { return this.$.opacity; },
+		set: function(value) {
+			this.$.opacity = value;
+			this.domElement.style.opacity = value;
 		}
 	});
 
