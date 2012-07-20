@@ -7,6 +7,8 @@ situations where that is desirable, while not taking away the strengths of
 the HTML DOM when it comes to flowing layouts.
 
 ## Example
+The following is the javascript from the helloworld.html example in the
+examples folder.
 ```javascript
 var body = new DOM.Element(document.body),
 	header = new DOM.Element('h1'),
@@ -25,11 +27,9 @@ header.y = 100;
 header.scaleX = 2;
 header.scaleY = 2;
 
-var animate = function() {
+setInterval(function() {
 	header.rotation += 2;
-	requestAnimationFrame(animate);
-};
-requestAnimationFrame(animate);
+}, 1000/60);
 ```
 By providing properties like this, it is easier to animate these properties
 using tweening engines, and to read back values with less fuzz, e.g. to animate
