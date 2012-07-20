@@ -19,9 +19,16 @@ var DOM = (function()
 			// If element is actual DOM element, use it directly
 			this.domElement = element;
 		}
-
-		this.add = add;
 	};
+
+	Element.prototype.add = function(child)
+	{
+		this._children.push(child);
+
+		if (child.domElement.parentNode != this.domElement)
+			this.domElement.appendChild(child.domElement);
+	};
+
 
 
 	var Text = function(element)
@@ -37,15 +44,6 @@ var DOM = (function()
 	};
 
 
-	var add = function(child)
-	{
-		this._children.push(child);
-
-		if (child.domElement.parentNode != this.domElement)
-			this.domElement.appendChild(child.domElement);
-	};
-
-
 	var fromNodeTree = function(root)
 	{
 		var element, child = root.firstChild;
@@ -55,7 +53,7 @@ var DOM = (function()
 		while (child) {
 			// Only create elements for non-text nodes or text nodes with
 			// content that is not entirely whitespace.
-			if (child.nodeType != 3 || /^\W*$/.exec(child.nodeValue)==null)
+			if (child.nodeType != 3 || /\S/.exec(child.nodeValue)!=null)
 				element.add(fromNodeTree(child));
 
 			child = child.nextSibling;
