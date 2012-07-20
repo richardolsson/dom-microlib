@@ -51,7 +51,6 @@ var DOM = (function()
 		}
 
 		// Set up basic style
-		var style = this.domElement.style;
 		this.domElement.style.position = 'absolute';
 		this.domElement.style.left = 0;
 		this.domElement.style.top = 0;
