@@ -2,6 +2,32 @@
 
 var DOM = (function()
 {
+	var setPrefixedProperty;
+
+	// Initializes "global" library functionality without polluting
+	// the general library (or global) scope.
+	(function initLib() {
+		var createPrefixer, dummy = document.createElement('div');
+
+		// Creates a function that can be used to set style
+		// properties with browser prefixes.
+		createPrefixer = function(prefix) {
+			return function(style, property, value) {
+				var prefixable = property.charAt(0).toUpperCase()+property.substr(1);
+				style[property] = value;
+				style[prefix+prefixable] = value;
+			};
+		}
+
+		if (dummy.style.webkitTransform !== undefined)
+			setPrefixedProperty = createPrefixer('webkit');
+		else if (dummy.style.MozTransform !== undefined)
+			setPrefixedProperty = createPrefixer('Moz');
+		else if (dummy.style.OTransform !== undefined)
+			setPrefixedProperty = createPrefixer('O');
+	})();
+
+
 	var Element = function(element)
 	{
 		if (element == undefined) {
