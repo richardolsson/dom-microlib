@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="../DOM.js"></script>
+		<style>
+			.news-item
+			{
+				width: 160px;
+				height: 160px;
+				padding: 10px;
+				background-color: silver;
+			}
+
+			.news-item h2
+			{
+				font-size: 20px;
+			}
+
+			.news-item p
+			{
+				font-size: 12px;
+				font-family: Arial, sans-serif;
+				line-height: 16px;
+			}
+		</style>
+		<script>
+
+			// TheNewsItem "class" represents the visual news-item and 
+			// actually "extends" the Element type, which is a very common
+			// pattern for visual objects in the Flash world.
+			var NewsItem = function(template)
+			{
+				DOM.Element.call(this, template);
+
+				this.opacity = 0;
+				this.scaleX = 0.8;
+				this.scaleY = 0.8;
+			};
+
+			// Extend the DOM.Element type.
+			NewsItem.prototype = new DOM.Element();
+			NewsItem.prototype.constructor = NewsItem;
+
+
+			// An animateIn() function updates the visual properties such
+			// as opacity and scale on the object itself.
+			NewsItem.prototype.animateIn = function()
+			{
+				// Uses setInterval() to animate, but should probably use
+				// requestAnimationFrame() with fallback in real cases.
+				var interval = setInterval(function()
+				{
+					this.opacity += 0.05;
+					this.scaleX += 0.01;
+					this.scaleY += 0.01;
+
+					// Stop animating when fully visible
+					if (this.opacity >= 1)
+						clearInterval(interval);
+
+				}.bind(this), 1000/60);
+			};
+
+
+			var init = function()
+			{
+				var body = new DOM.Element(document.body),
+					header = new DOM.Element(document.querySelector('h1')),
+					template = document.querySelector('.news-item'),
+					i, len = 10, cols = 5;
+
+				// Remove the node that will only be used as a template anyway
+				// Clones of this node will be used as the DOM representations
+				// of the news item elements, but it's children will remain
+				// without DOM.Element representations, and instead get all of
+				// their styling from the CSS above.
+				template.parentNode.removeChild(template);
+
+				// Create a number of news-item instances, lay them out in a 
+				// grid using absolute coordinates, and animate them in using
+				// their animateIn() method, but with a slight delay.
+				for (i=0; i<len; i++) {
+					var item = new NewsItem(template.cloneNode(true));
+
+					item.x = (i%cols) * 200;
+					item.y = Math.floor(i/cols) * 200 + 100;
+					body.add(item);
+
+					// Delay animation
+					setTimeout(item.animateIn.bind(item), i*100);
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<h1>News</h1>
+		<div class="news-item">
+			<h2>Lorem ipsum</h2>
+			<p>Lorem ipsum dolor sit amet. This is a news post.</p>
+		</div>
+
+		<script>
+			init();
+		</script>
+	</body>
+</html>
