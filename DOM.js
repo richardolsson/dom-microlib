@@ -1,7 +1,7 @@
-"use strict"
-
 var DOM = (function()
 {
+	"use strict";
+
 	var setPrefixedProperty,
 		transformValue;
 	
@@ -23,7 +23,7 @@ var DOM = (function()
 				style[property] = value;
 				style[prefix+prefixable] = value;
 			};
-		}
+		};
 
 		if (dummy.style.webkitTransform !== undefined)
 			setPrefixedProperty = createPrefixer('webkit');
