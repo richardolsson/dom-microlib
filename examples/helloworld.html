@@ -1,21 +1,31 @@
 <!doctype html>
 <html>
 	<head>
-		<script src="DOM.js"></script>
+		<script src="../DOM.js"></script>
 	</head>
 	<body>
-		<div id="mekk">
-			<h2>Jidder</h2>
-		</div>
 		<script>
-			var root = DOM.fromNodeTree(document.getElementById('mekk')),
-				div = new DOM.Element(),
-				h1 = new DOM.Element('h1');
+			var body = new DOM.Element(document.body),
+				header = new DOM.Element('h1'),
+				text = new DOM.Text('Hello, World');
 		
-			root.add(div);
-			div.add(h1);
-		
-			console.log(root);
+			header.add(text);
+			body.add(header);
+
+			// All elements are absolutely positioned, and units
+			// are always pixels.
+			header.x = 200;
+			header.y = 100;
+
+			// Internally translates to CSS transforms, dealing
+			// automatically with vendor prefixes et c.
+			header.scaleX = 2;
+			header.scaleY = 2;
+
+			setInterval(function() {
+			    header.rotation += 2;
+			}, 1000/60);
+
 		</script>
 	</body>
 </html>
