@@ -18,10 +18,37 @@ var DOM = (function()
 			this.domElement = element;
 		}
 
+		// Set up basic style
+		this.domElement.style.position = 'absolute';
+		this.domElement.style.left = 0;
+		this.domElement.style.top = 0;
+
+		// Internal ("private") state
 		this.$ = {
+			x: 0,
+			y: 0,
 			children: []
 		};
 	};
+
+
+	Object.defineProperty(Element.prototype, 'x', {
+		get: function() { return this.$.x; },
+		set: function(value) {
+			this.$.x = value;
+			this.domElement.style.left = value+'px';
+		}
+	});
+
+
+	Object.defineProperty(Element.prototype, 'y', {
+		get: function() { return this.$.y; },
+		set: function(value) {
+			this.$.y = value;
+			this.domElement.style.top = value+'px';
+		}
+	});
+
 
 	Element.prototype.add = function(child)
 	{
