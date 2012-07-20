@@ -65,6 +65,7 @@ var DOM = (function()
 			scaleX: 0,
 			scaleY: 0,
 			opacity: 1,
+			rotation: 0,
 			children: []
 		};
 	};
