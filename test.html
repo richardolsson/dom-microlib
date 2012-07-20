@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="DOM.js"></script>
+	</head>
+	<body>
+		<div id="mekk">
+			<h2>Jidder</h2>
+		</div>
+		<script>
+			var root = DOM.fromNodeTree(document.getElementById('mekk')),
+				div = new DOM.Element(),
+				h1 = new DOM.Element('h1');
+		
+			root.add(div);
+			div.add(h1);
+		
+			console.log(root);
+		</script>
+	</body>
+</html>
