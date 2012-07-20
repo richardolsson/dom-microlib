@@ -2,7 +2,13 @@
 
 var DOM = (function()
 {
-	var setPrefixedProperty;
+	var setPrefixedProperty,
+		transformValue;
+	
+	// Initialize array with all fields that need to be concatenated
+	// together into the transform style property value.
+	transformValue = ['rotate(', 0, 'deg) scale(', 1, ',', 1, ')'];
+
 
 	// Initializes "global" library functionality without polluting
 	// the general library (or global) scope.
@@ -45,14 +51,18 @@ var DOM = (function()
 		}
 
 		// Set up basic style
+		var style = this.domElement.style;
 		this.domElement.style.position = 'absolute';
 		this.domElement.style.left = 0;
 		this.domElement.style.top = 0;
+		setPrefixedProperty(this.domElement.style, 'transform', 'rotate(0) scale(1,1)')
 
 		// Internal ("private") state
 		this.$ = {
 			x: 0,
 			y: 0,
+			scaleX: 0,
+			scaleY: 0,
 			children: []
 		};
 	};
@@ -72,6 +82,42 @@ var DOM = (function()
 		set: function(value) {
 			this.$.y = value;
 			this.domElement.style.top = value+'px';
+		}
+	});
+
+
+	Object.defineProperty(Element.prototype, 'scaleX', {
+		get: function() { return this.$.scaleX; },
+		set: function(value) {
+			this.$.scaleX = value;
+
+			// Update transform property
+			transformValue[3] = value;
+			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
+		}
+	});
+
+
+	Object.defineProperty(Element.prototype, 'scaleY', {
+		get: function() { return this.$.scaleY; },
+		set: function(value) {
+			this.$.scaleY = value;
+
+			// Update transform property
+			transformValue[5] = value;
+			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
+		}
+	});
+
+
+	Object.defineProperty(Element.prototype, 'rotation', {
+		get: function() { return this.$.rotation; },
+		set: function(value) {
+			this.$.rotation = value;
+
+			// Update transform property
+			transformValue[1] = value;
+			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
 		}
 	});
 
