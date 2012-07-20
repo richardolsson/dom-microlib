@@ -133,6 +133,11 @@ var DOM = (function()
 	});
 
 
+	Object.defineProperty(Element.prototype, 'numChildren', {
+		get: function() { return this.$.children.length; }
+	});
+
+
 	Element.prototype.add = function(child)
 	{
 		this.$.children.push(child);
@@ -141,6 +146,11 @@ var DOM = (function()
 			this.domElement.appendChild(child.domElement);
 	};
 
+
+	Element.prototype.childAt = function(index)
+	{
+		return this.$.children[index];
+	};
 
 
 	var Text = function(element)
