@@ -4,8 +4,6 @@ var DOM = (function()
 {
 	var Element = function(element)
 	{
-		this._children = [];
-
 		if (element == undefined) {
 			// Default behavior is to create a div DOM element
 			element = 'div';
@@ -19,11 +17,15 @@ var DOM = (function()
 			// If element is actual DOM element, use it directly
 			this.domElement = element;
 		}
+
+		this.$ = {
+			children: []
+		};
 	};
 
 	Element.prototype.add = function(child)
 	{
-		this._children.push(child);
+		this.$.children.push(child);
 
 		if (child.domElement.parentNode != this.domElement)
 			this.domElement.appendChild(child.domElement);
