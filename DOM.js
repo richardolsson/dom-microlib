@@ -157,8 +157,8 @@ var DOM = (function()
 	var Text = function(element)
 	{
 		if (element.substring) {
-			this.text = str;
-			this.domElement = document.createTextNode(str);
+			this.text = element;
+			this.domElement = document.createTextNode(element);
 		}
 		else {
 			this.domElement = element;
