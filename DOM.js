@@ -92,10 +92,7 @@ var DOM = (function()
 		get: function() { return this.$.scaleX; },
 		set: function(value) {
 			this.$.scaleX = value;
-
-			// Update transform property
-			transformValue[3] = value;
-			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
+			updateTransform(this);
 		}
 	});
 
@@ -104,10 +101,7 @@ var DOM = (function()
 		get: function() { return this.$.scaleY; },
 		set: function(value) {
 			this.$.scaleY = value;
-
-			// Update transform property
-			transformValue[5] = value;
-			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
+			updateTransform(this);
 		}
 	});
 
@@ -116,10 +110,7 @@ var DOM = (function()
 		get: function() { return this.$.rotation; },
 		set: function(value) {
 			this.$.rotation = value;
-
-			// Update transform property
-			transformValue[1] = value;
-			setPrefixedProperty(this.domElement.style, 'transform', transformValue.join(''));
+			updateTransform(this);
 		}
 	});
 
@@ -150,6 +141,16 @@ var DOM = (function()
 	Element.prototype.childAt = function(index)
 	{
 		return this.$.children[index];
+	};
+
+
+	var updateTransform = function(element)
+	{
+		transformValue[1] = element.$.rotation;
+		transformValue[3] = element.$.scaleX;
+		transformValue[5] = element.$.scaleY;
+
+		setPrefixedProperty(element.domElement.style, 'transform', transformValue.join(''));
 	};
 
 
