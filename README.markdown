@@ -35,7 +35,16 @@ By providing properties like this, it is easier to animate these properties
 using tweening engines, and to read back values with less fuzz, e.g. to animate
 by incrementing them over time.
 
-## Why!?
+## Browser support
+This library only works in modern browsers, like semi-recent Firefox, Chrome,
+Safari, Opera, & IE9, and should work in the mobile browsers as well. An effort
+could probably be made to remove dependencies on some modern-browser technology
+(like `Object.defineProperty()`) but if you are building the type of site where
+you would benefit from using this library, there are probably other aspects of
+your project (like most of HTML5) that keeps you from targeting older browsers
+anyway.
+
+## Why is this needed?
 My experience from working with Flash for a long time, and recently having
 started creating "Flash-like" websites using HTML5 technologies, is that trying
 to build an interface that is everything but a "document", using a mix of HTML,
