@@ -48,17 +48,18 @@
 			{
 				// Uses setInterval() to animate, but should probably use
 				// requestAnimationFrame() with fallback in real cases.
+				var self = this;
 				var interval = setInterval(function()
 				{
-					this.opacity += 0.05;
-					this.scaleX += 0.01;
-					this.scaleY += 0.01;
+					self.opacity += 0.05;
+					self.scaleX += 0.01;
+					self.scaleY += 0.01;
 
 					// Stop animating when fully visible
-					if (this.opacity >= 1)
+					if (self.opacity >= 1)
 						clearInterval(interval);
 
-				}.bind(this), 1000/60);
+				}, 1000/60);
 			};
 
 
@@ -87,7 +88,9 @@
 					body.add(item);
 
 					// Delay animation
-					setTimeout(item.animateIn.bind(item), i*100);
+					(function(item) {
+						setTimeout(function() { item.animateIn(); }, i*100);
+					})(item);
 				}
 			};
 		</script>
